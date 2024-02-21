@@ -18,10 +18,16 @@ module.exports = {
       duedate: {
         type: Sequelize.STRING,
       },
+
+      idUser: {
+        type: Sequelize.INTEGER,
+      },
+
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE,
       },
+
       updatedAt: {
         allowNull: true,
         type: Sequelize.DATE,

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsToMany(models.User, { through: "Task_User" });
+      Task.belongsTo(models.User);
     }
   }
 
@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       description: DataTypes.STRING,
       duedate: DataTypes.STRING,
+      idUser: DataTypes.INTEGER,
     },
     {
       sequelize,
