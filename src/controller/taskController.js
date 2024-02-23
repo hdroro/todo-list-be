@@ -1,31 +1,56 @@
 import taskApiService from "../service/taskService";
-// const readFunc = async (req, res) => {
-//   try {
-//     if (req.query.page && req.query.limit) {
-//       let { page, limit } = req.query;
-//       let data = await taskApiService.getUserWithPagination(+page, +limit);
-//       return res.status(200).json({
-//         EM: data.EM, //error message
-//         EC: data.EC, // error code
-//         DT: data.DT, //data
-//       });
-//     } else {
-//       let data = await taskApiService.getAllUsers();
-//       return res.status(200).json({
-//         EM: data.EM, //error message
-//         EC: data.EC, // error code
-//         DT: data.DT, //data
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(200).json({
-//       EM: "error from server", //error message
-//       EC: "-1", // error code
-//       DT: "", //data
-//     });
-//   }
-// };
+
+const readTodayFunc = async (req, res) => {
+  try {
+    if (req.query.idUser) {
+      let data = await taskApiService.readTodayTask(req.query.idUser);
+      return res.status(200).json({
+        EM: data.EM, //error message
+        EC: data.EC, // error code
+        DT: data.DT, //data
+      });
+    } else {
+      return res.status(200).json({
+        EM: "error from server", //error message
+        EC: "-1", // error code
+        DT: "", //data
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      EM: "error from server", //error message
+      EC: "-1", // error code
+      DT: "", //data
+    });
+  }
+};
+
+const readOverDateFunc = async (req, res) => {
+  try {
+    if (req.query.idUser) {
+      let data = await taskApiService.readDueDateTask(req.query.idUser);
+      return res.status(200).json({
+        EM: data.EM, //error message
+        EC: data.EC, // error code
+        DT: data.DT, //data
+      });
+    } else {
+      return res.status(200).json({
+        EM: "error from server", //error message
+        EC: "-1", // error code
+        DT: "", //data
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      EM: "error from server", //error message
+      EC: "-1", // error code
+      DT: "", //data
+    });
+  }
+};
 
 const createFunc = async (req, res) => {
   try {
@@ -103,7 +128,8 @@ const deleteFunc = async (req, res) => {
 };
 
 module.exports = {
-  //   readFunc,
+  readTodayFunc,
+  readOverDateFunc,
   createFunc,
   updateFunc,
   deleteFunc,

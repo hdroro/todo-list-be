@@ -12,6 +12,9 @@ const initApiRoutes = (app) => {
   router.post("/login", apiController.handleLogin);
   router.post("/logout", apiController.handleLogout);
 
+  router.get("/task/read-today", taskController.readTodayFunc);
+  router.get("/task/read-overdue", taskController.readOverDateFunc);
+  // router.get("/task/read-upcoming", taskController.createFunc);
   router.post("/task/create", taskController.createFunc);
   router.post("/task/update", taskController.updateFunc);
   router.post("/task/delete", taskController.deleteFunc);

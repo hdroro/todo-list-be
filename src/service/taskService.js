@@ -1,4 +1,76 @@
+import { Op } from "sequelize";
 import db from "../models/index";
+import { convertToYearDMY } from "../utils/dateFormat";
+
+const readTodayTask = async (idUser) => {
+  try {
+    let task = await db.Task.findAll({
+      attributes: ["id", "title", "description", "duedate"],
+      where: {
+        idUser: idUser,
+        duedate: { [Op.eq]: convertToYearDMY(new Date()) },
+      },
+      order: [["duedate", "DESC"]],
+      raw: true,
+      nest: true,
+    });
+    if (task) {
+      return {
+        EM: "get data success",
+        EC: 0,
+        DT: task,
+      };
+    } else {
+      return {
+        EM: "something wrongs with service",
+        EC: 1,
+        DT: [],
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      EM: "something wrongs with service",
+      EC: 1,
+      DT: [],
+    };
+  }
+};
+
+const readDueDateTask = async (idUser) => {
+  try {
+    let task = await db.Task.findAll({
+      attributes: ["id", "title", "description", "duedate"],
+      where: {
+        idUser: idUser,
+        duedate: { [Op.lt]: convertToYearDMY(new Date()) }, // Use Op.lt (less than) operator for dates
+      },
+      order: [["duedate", "DESC"]],
+      raw: true,
+      nest: true,
+    });
+    if (task) {
+      return {
+        EM: "get data success",
+        EC: 0,
+        DT: task,
+      };
+    } else {
+      return {
+        EM: "something wrongs with service",
+        EC: 1,
+        DT: [],
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      EM: "something wrongs with service",
+      EC: 1,
+      DT: [],
+    };
+  }
+};
 
 const createNewTask = async (title, description, duedate, idUser) => {
   try {
@@ -85,6 +157,8 @@ const deleteTask = async (id) => {
 };
 
 module.exports = {
+  readTodayTask,
+  readDueDateTask,
   createNewTask,
   updateTask,
   deleteTask,
