@@ -127,10 +127,40 @@ const deleteFunc = async (req, res) => {
   }
 };
 
+const readUpcomingFunc = async (req, res) => {
+  try {
+    if (req.query.date) {
+      let data = await taskApiService.readUpcomingTasks(
+        req.query.idUser,
+        req.query.date
+      );
+      return res.status(200).json({
+        EM: data.EM, //error message
+        EC: data.EC, // error code
+        DT: data.DT, //data
+      });
+    } else {
+      return res.status(200).json({
+        EM: "error from server", //error message
+        EC: "-1", // error code
+        DT: "", //data
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      EM: "error from server", //error message
+      EC: "-1", // error code
+      DT: "", //data
+    });
+  }
+};
+
 module.exports = {
   readTodayFunc,
   readOverDateFunc,
   createFunc,
   updateFunc,
   deleteFunc,
+  readUpcomingFunc,
 };

@@ -16,7 +16,7 @@ module.exports = {
       },
 
       duedate: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
 
       idUser: {
