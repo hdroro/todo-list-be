@@ -99,6 +99,7 @@ const createNewTask = async (title, description, duedate, idUser) => {
 const updateTask = async (id, title, description, duedate) => {
   try {
     const task = await db.Task.findOne({
+      attributes: ["id", "title", "description", "duedate", "idUser"],
       where: {
         id: id,
       },
@@ -128,8 +129,11 @@ const updateTask = async (id, title, description, duedate) => {
 
 const deleteTask = async (id) => {
   try {
-    let task = await db.Task.findOne({
-      where: { id: id },
+    const task = await db.Task.findOne({
+      attributes: ["id", "title", "description", "duedate", "idUser"],
+      where: {
+        id: id,
+      },
     });
 
     if (task) {

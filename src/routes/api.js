@@ -16,8 +16,8 @@ const initApiRoutes = (app) => {
   router.get("/task/read-overdue", taskController.readOverDateFunc);
   // router.get("/task/read-upcoming", taskController.createFunc);
   router.post("/task/create", taskController.createFunc);
-  router.post("/task/update", taskController.updateFunc);
-  router.post("/task/delete", taskController.deleteFunc);
+  router.put("/task/update", taskController.updateFunc);
+  router.delete("/task/delete", taskController.deleteFunc);
 
   router.get("/account", userController.getUserAccount);
 
