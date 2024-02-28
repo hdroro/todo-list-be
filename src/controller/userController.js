@@ -119,6 +119,27 @@ const deleteFunc = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    let data;
+
+    data = await userApiService.handleChangePassword(req.body);
+
+    return res.status(200).json({
+      EM: data.EM, //error message
+      EC: data.EC, // error code
+      DT: data.DT, //data
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      EM: "error from server", //error message
+      EC: "-1", // error code
+      DT: "", //data
+    });
+  }
+};
+
 const getUserAccount = async (req, res) => {
   return res.status(200).json({
     EM: "OK", //error message
@@ -137,5 +158,6 @@ module.exports = {
   createFunc,
   updateFunc,
   deleteFunc,
+  changePassword,
   getUserAccount,
 };

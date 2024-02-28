@@ -68,6 +68,50 @@ const createNewUser = async (email, password, username, fullname) => {
   }
 };
 
+const checkPassword = (inputPassword, hashPassword) => {
+  return bcypt.compareSync(inputPassword, hashPassword);
+};
+
+const handleChangePassword = async (rawData) => {
+  try {
+    const user = await db.User.findOne({
+      where: {
+        id: rawData.id,
+      },
+    });
+
+    if (user) {
+      let isCorrectPassword = checkPassword(rawData.oldPassword, user.password);
+      if (isCorrectPassword) {
+        let hashPassword = hashUserPassword(rawData.newPassword);
+        user.password = hashPassword;
+
+        await user.save();
+
+        return {
+          EM: "Change Password successfully!",
+          EC: 0,
+          DT: [],
+        };
+      } else {
+        return {
+          EM: "Your Old Password is incorrect!",
+          EC: 2,
+          DT: "",
+        };
+      }
+    }
+    return {
+      EM: "Not found",
+      EC: 1,
+      DT: "",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createNewUser,
+  handleChangePassword,
 };

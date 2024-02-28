@@ -12,6 +12,8 @@ const initApiRoutes = (app) => {
   router.post("/login", apiController.handleLogin);
   router.post("/logout", apiController.handleLogout);
 
+  router.put("/change-password", userController.changePassword);
+
   router.get("/task/read-today", taskController.readTodayFunc);
   router.get("/task/read-overdue", taskController.readOverDateFunc);
   router.get("/task/read-upcoming", taskController.readUpcomingFunc);
